@@ -252,22 +252,41 @@ func _render_fate() -> void:
 
 func _render_report() -> void:
 	_add_background("life_report_bg.png", "ui_flow_3.png")
-	var panel := _paper_panel(Vector2(120, 90), Vector2(1680, 900))
+	var panel := _paper_panel(Vector2(170, 90), Vector2(1580, 900))
 	_content.add_child(panel)
 	_add_title(panel, "动物生平报告", "这一世，它记住过一扇门。")
-	var report := "动物：狗\n出生环境：家养家庭\n命运偏差：%s\n本局小愿望：%s\n\n成长记忆：\n%s\n\n行为统计：\n咬/甩：%d  等门：%d  守门：%d  追踪：%d  慢靠近：%d\n\n最后一句：%s" % [
+
+	var info_panel := _paper_panel(Vector2(80, 230), Vector2(400, 250))
+	panel.add_child(info_panel)
+	_add_body(info_panel, "本世档案", Vector2(28, 24), Vector2(340, 38), 30)
+	_add_body(info_panel, "动物：狗\n出生环境：家养家庭\n命运偏差：%s\n本局小愿望：%s" % [
 		GameState.selected_deviation["title"],
 		GameState.selected_wish,
-		_format_memories(),
+	], Vector2(28, 82), Vector2(340, 130), 24)
+
+	var memory_panel := _paper_panel(Vector2(520, 230), Vector2(620, 520))
+	panel.add_child(memory_panel)
+	_add_body(memory_panel, "成长记忆", Vector2(34, 28), Vector2(520, 42), 32)
+	_add_body(memory_panel, _format_memories(), Vector2(34, 94), Vector2(540, 360), 23)
+
+	var stats_panel := _paper_panel(Vector2(1180, 230), Vector2(320, 360))
+	panel.add_child(stats_panel)
+	_add_body(stats_panel, "行为统计", Vector2(28, 28), Vector2(250, 42), 32)
+	_add_body(stats_panel, "咬 / 甩：%d\n等门：%d\n守门：%d\n追踪：%d\n慢靠近：%d" % [
 		int(GameState.stats.get("bite", 0)),
 		int(GameState.stats.get("wait", 0)),
 		int(GameState.stats.get("guard", 0)),
 		int(GameState.stats.get("track", 0)),
 		int(GameState.stats.get("approach", 0)),
-		str(GameState.memories.get("last_approach", "它安静地走完了这一世。")),
-	]
-	_add_body(panel, report, Vector2(90, 210), Vector2(1180, 560), 26)
-	_add_button(panel, "再投一胎", Vector2(1280, 690), func() -> void:
+	], Vector2(28, 92), Vector2(250, 210), 24)
+
+	var final_panel := _paper_panel(Vector2(80, 790), Vector2(1060, 72))
+	panel.add_child(final_panel)
+	_add_body(final_panel, "最后一句：%s" % str(
+		GameState.memories.get("last_approach", "它安静地走完了这一世。")
+	), Vector2(28, 18), Vector2(990, 34), 24)
+
+	_add_button_sized(panel, "再投一胎", Vector2(1180, 790), Vector2(320, 72), func() -> void:
 		GameState.reset_game()
 	)
 
