@@ -294,8 +294,8 @@ func _load_texture(path: String) -> Texture2D:
 	return load(path) as Texture2D
 
 
-func _paper_panel(position: Vector2, size: Vector2) -> PanelContainer:
-	var panel := PanelContainer.new()
+func _paper_panel(position: Vector2, size: Vector2) -> Panel:
+	var panel := Panel.new()
 	panel.position = position
 	panel.custom_minimum_size = size
 	panel.size = size
@@ -332,7 +332,7 @@ func _add_title(parent: Control, title: String, subtitle: String) -> void:
 	parent.add_child(sub_label)
 
 
-func _screen_title(title: String, subtitle: String) -> PanelContainer:
+func _screen_title(title: String, subtitle: String) -> Panel:
 	var panel := _paper_panel(Vector2(520, 70), Vector2(880, 150))
 	_add_title(panel, title, subtitle)
 	return panel
@@ -364,7 +364,7 @@ func _add_button(parent: Control, text: String, position: Vector2, callable: Cal
 	parent.add_child(button)
 
 
-func _selection_card(position: Vector2, size: Vector2, data: Dictionary) -> PanelContainer:
+func _selection_card(position: Vector2, size: Vector2, data: Dictionary) -> Panel:
 	var card := _paper_panel(position, size)
 	var name_label := Label.new()
 	name_label.text = data["name"]
