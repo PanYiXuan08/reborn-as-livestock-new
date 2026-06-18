@@ -1,0 +1,28 @@
+; Engine configuration file.
+; Best edited in Godot, but this prototype keeps the first pass text-readable.
+
+config_version=5
+
+[application]
+
+config/name="Reborn as Livestock New"
+config/description="再投一胎：动物人生重开模拟器 - 狗线家养家庭原型"
+run/main_scene="res://main.tscn"
+config/features=PackedStringArray("4.6")
+
+[autoload]
+
+GameState="*res://autoload/game_state.gd"
+
+[display]
+
+window/size/viewport_width=1920
+window/size/viewport_height=1080
+window/stretch/mode="canvas_items"
+window/stretch/aspect="keep"
+
+[rendering]
+
+renderer/rendering_method="gl_compatibility"
+textures/canvas_textures/default_texture_filter=1
+
