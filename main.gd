@@ -140,19 +140,20 @@ func _render() -> void:
 
 func _render_home() -> void:
 	_add_background("home_bg.png", "ui_flow_1.png")
-	var panel := _paper_panel(Vector2(90, 120), Vector2(520, 690))
+	var panel := _paper_panel(Vector2(630, 140), Vector2(660, 690))
 	_content.add_child(panel)
 	_add_title(panel, "再投一胎", "动物人生重开模拟器")
-	_add_button(panel, "开始投胎", Vector2(80, 270), func() -> void:
+	var button_x := (panel.size.x - 480.0) * 0.5
+	_add_button_sized(panel, "开始投胎", Vector2(button_x, 270), Vector2(480, 72), func() -> void:
 		GameState.set_screen(SCREEN_WHEEL)
 	)
-	_add_button(panel, "生涯档案", Vector2(80, 360), func() -> void:
+	_add_button_sized(panel, "生涯档案", Vector2(button_x, 360), Vector2(480, 72), func() -> void:
 		_show_notice("生涯档案", "首版先验证狗线家养家庭，这里保留入口。")
 	)
-	_add_button(panel, "命运图鉴", Vector2(80, 450), func() -> void:
+	_add_button_sized(panel, "命运图鉴", Vector2(button_x, 450), Vector2(480, 72), func() -> void:
 		_show_notice("命运图鉴", "命运偏差和成长记忆会在后续版本沉淀到这里。")
 	)
-	_add_button(panel, "设置", Vector2(80, 540), func() -> void:
+	_add_button_sized(panel, "设置", Vector2(button_x, 540), Vector2(480, 72), func() -> void:
 		_show_notice("设置", "设置页占位。")
 	)
 
@@ -357,6 +358,14 @@ func _button(text: String) -> Button:
 	return button
 
 
+func _add_button_sized(parent: Control, text: String, position: Vector2, size: Vector2, callable: Callable) -> void:
+	var button := _button(text)
+	button.position = position
+	button.custom_minimum_size = size
+	button.size = size
+	button.pressed.connect(callable)
+	parent.add_child(button)
+
 func _add_button(parent: Control, text: String, position: Vector2, callable: Callable) -> void:
 	var button := _button(text)
 	button.position = position
@@ -471,4 +480,3 @@ func _show_notice(title: String, body: String) -> void:
 	_add_button(panel, "关闭", Vector2(130, 240), func() -> void:
 		panel.queue_free()
 	)
-
