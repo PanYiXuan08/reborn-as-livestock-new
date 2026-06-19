@@ -31,5 +31,14 @@ C:\Godot_v4.6.3\Godot_v4.6.3-stable_win64_console.exe --headless --path C:\Pi\re
 - Prompts: `tools/ui_asset_prompts.jsonl`
 - Output: `assets/ui_generated`
 
-Current blocker: JOJO returns `503 model_not_found` with `No available channel for model gpt-image-2 under group CodexPlus`, even though the model list includes `gpt-image-2`.
+13 assets generated on 2026-06-18 (dog_card, dog_life_stages, family_home_card, fate_deviation_card, home_bg, life_report_bg, rebirth_wheel, theater_entryway, theater_fate_door, theater_living_room, theater_old_shelf, theater_rain_street, wish_board). All committed to repo.
+
+To re-run generation:
+
+```powershell
+pwsh -File tools\generate_ui_assets.ps1
+```
+
+Note: `.import` files are gitignored (`*.import`) — Godot regenerates them on project open. UID mappings are preserved in the `.godot/` cache.
+
 
