@@ -1,3 +1,4 @@
+@tool
 extends Node
 
 signal changed
@@ -74,13 +75,13 @@ func choose_wish(wish: String) -> void:
 
 func record_action(action_id: String, memory_key: String, memory_sentence: String) -> void:
 	stats[action_id] = int(stats.get(action_id, 0)) + 1
-	if not memories.has(memory_key):
-		memories[memory_key] = memory_sentence
-	elif memory_key.begins_with("best_"):
-		memories[memory_key] = memory_sentence
-	elif memory_key.begins_with("last_"):
+	if not memories.has(memory_key) or _should_overwrite(memory_key):
 		memories[memory_key] = memory_sentence
 	changed.emit()
+
+
+func _should_overwrite(key: String) -> bool:
+	return key.begins_with("best_") or key.begins_with("last_")
 
 
 func advance_act() -> void:
@@ -89,15 +90,8 @@ func advance_act() -> void:
 
 
 func current_stage() -> String:
-	if act_index <= 0:
-		return STAGES[0]
-	if act_index == 1:
-		return STAGES[1]
-	if act_index <= 3:
-		return STAGES[2]
-	if act_index == 4:
-		return STAGES[3]
-	if act_index == 5:
-		return STAGES[4]
-	return STAGES[5]
+	# 7 acts (0-6) map to 6 stages: act 2 and 3 both map to "成年期"
+	var stage_map := [0, 1, 2, 2, 3, 4, 5]
+	var idx := clampi(act_index, 0, stage_map.size() - 1)
+	return STAGES[stage_map[idx]]
 

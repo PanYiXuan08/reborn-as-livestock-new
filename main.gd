@@ -242,7 +242,7 @@ func _render_theater() -> void:
 
 
 func _render_fate() -> void:
-	var act := ACTS[6]
+	var act := ACTS[ACTS.size() - 1]
 	_add_background(act["asset"], "ui_flow_2.png")
 	_add_bookmark_bar()
 	_add_status_bar()
@@ -272,11 +272,12 @@ func _render_report() -> void:
 	var stats_panel := _paper_panel(Vector2(1180, 230), Vector2(320, 360))
 	panel.add_child(stats_panel)
 	_add_body(stats_panel, "行为统计", Vector2(28, 28), Vector2(250, 42), 32)
-	_add_body(stats_panel, "咬 / 甩：%d\n等门：%d\n守门：%d\n追踪：%d\n慢靠近：%d" % [
+	_add_body(stats_panel, "咬 / 甩：%d\n等门：%d\n守门：%d\n追踪：%d\n闻/嗅：%d\n慢靠近：%d" % [
 		int(GameState.stats.get("bite", 0)),
 		int(GameState.stats.get("wait", 0)),
 		int(GameState.stats.get("guard", 0)),
 		int(GameState.stats.get("track", 0)),
+		int(GameState.stats.get("sniff", 0)),
 		int(GameState.stats.get("approach", 0)),
 	], Vector2(28, 92), Vector2(250, 210), 24)
 
